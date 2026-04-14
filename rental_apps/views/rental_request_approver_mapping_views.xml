@@ -1,0 +1,39 @@
+<odoo>
+  <record id="rental_request_approver_mapping_list_view" model="ir.ui.view">
+    <field name="name">rental.request.approver.mapping.list</field>
+    <field name="model">rental.request.approver.mapping</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="role"/>
+        <field name="user_id"/>
+        <field name="active"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="rental_request_approver_mapping_form_view" model="ir.ui.view">
+    <field name="name">rental.request.approver.mapping.form</field>
+    <field name="model">rental.request.approver.mapping</field>
+    <field name="arch" type="xml">
+      <form string="Approver Mapping">
+        <sheet>
+          <group>
+            <group>
+              <field name="role"/>
+              <field name="user_id"/>
+            </group>
+            <group>
+              <field name="active"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="rental_request_approver_mapping_action" model="ir.actions.act_window">
+    <field name="name">Approver Mapping</field>
+    <field name="res_model">rental.request.approver.mapping</field>
+    <field name="view_mode">list,form</field>
+  </record>
+</odoo>

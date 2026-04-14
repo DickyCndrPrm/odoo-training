@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+    <record id="user_rental_approver_l1_joko" model="res.users">
+      <field name="name">Joko</field>
+      <field name="login">joko.manager</field>
+      <field name="email">joko.manager@example.com</field>
+      <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('rental_apps.group_rental_approver_l1')])]"/>
+    </record>
+
+    <record id="user_rental_approver_l2_wira" model="res.users">
+      <field name="name">Wira</field>
+      <field name="login">wira.srmanager</field>
+      <field name="email">wira.srmanager@example.com</field>
+      <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('rental_apps.group_rental_approver_l1'), ref('rental_apps.group_rental_approver_l2')])]"/>
+    </record>
+
+    <record id="user_rental_approver_l3_reno" model="res.users">
+      <field name="name">Reno</field>
+      <field name="login">reno.direktur</field>
+      <field name="email">reno.direktur@example.com</field>
+      <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('rental_apps.group_rental_approver_l1'), ref('rental_apps.group_rental_approver_l2'), ref('rental_apps.group_rental_approver_l3')])]"/>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,5 @@
+{
+  "python.analysis.extraPaths": ["D:/odoo/odoo", "D:/odoo/odoo/addons"],
+  "python.analysis.indexing": true,
+  "python.analysis.typeCheckingMode": "basic"
+}

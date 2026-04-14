@@ -1,0 +1,22 @@
+<odoo>
+  <data noupdate="1">
+    <record id="fleet_brand_honda" model="fleet.vehicle.model.brand">
+      <field name="name">Honda</field>
+    </record>
+    <record id="fleet_brand_toyota" model="fleet.vehicle.model.brand">
+      <field name="name">Toyota</field>
+    </record>
+    <record id="fleet_brand_mitsubishi" model="fleet.vehicle.model.brand">
+      <field name="name">Mitsubishi</field>
+    </record>
+    <record id="fleet_brand_mazda" model="fleet.vehicle.model.brand">
+      <field name="name">Mazda</field>
+    </record>
+    <record id="fleet_brand_bmw" model="fleet.vehicle.model.brand">
+      <field name="name">BMW</field>
+    </record>
+    <record id="fleet_brand_mercedes" model="fleet.vehicle.model.brand">
+      <field name="name">Mercedes</field>
+    </record>
+  </data>
+</odoo>

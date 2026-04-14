@@ -1,0 +1,138 @@
+<odoo>
+  <record id="leasing_amortization_search_view" model="ir.ui.view">
+    <field name="name">leasing.amortization.view.search</field>
+    <field name="model">leasing.amortization</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <field name="start_date"/>
+        <field name="principal"/>
+
+        <separator/>
+
+        <filter name="group_by_start_date" string="Start Date" context="{'group_by': 'start_date'}"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="leasing_amortization_list_view" model="ir.ui.view">
+    <field name="name">leasing.amortization.view.list</field>
+    <field name="model">leasing.amortization</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="state"/>
+        <field name="rental_request_id" optional="hide"/>
+        <field name="partner_id"/>
+        <field name="currency_id" optional="hide"/>
+        <field name="principal"/>
+        <field name="term_years"/>
+        <field name="number_of_months"/>
+        <field name="annual_rate"/>
+        <field name="monthly_rate"/>
+        <field name="monthly_payment"/>
+        <field name="start_date"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="leasing_amortization_form_view" model="ir.ui.view">
+    <field name="name">leasing.amortization.view.form</field>
+    <field name="model">leasing.amortization</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>
+          <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" invisible="state != 'draft'"/>
+          <button name="action_generate_schedule" type="object" string="Generate Schedule" invisible="state not in ('draft','confirmed')"/>
+          <button name="action_generate_vendor_bills" type="object" string="Generate Bills" class="oe_highlight" invisible="state not in ('confirmed','done')"/>
+          <button name="action_set_draft" type="object" string="Set to Draft" invisible="state == 'draft'"/>
+          <button name="action_cancel" type="object" string="Cancel" invisible="state == 'cancelled'"/>
+          <button name="action_export_csv" type="object" string="Export CSV"/>
+          <button name="action_export_xlsx" type="object" string="Export XLSX"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done,cancelled"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="action_view_journal_entries" type="object" class="oe_stat_button" icon="fa-book">
+              <field name="journal_entry_count" widget="statinfo" string="Vendor Bills"/>
+            </button>
+          </div>
+
+          <div class="oe_title">
+            <label for="name" string="Calculation"/>
+            <h1>
+              <field name="name" placeholder="E.g. Lease-2026-001"/>
+            </h1>
+          </div>
+
+          <group string="Loan Information">
+            <group>
+              <field name="rental_request_id"/>
+              <field name="principal" string="Amount"/>
+              <field name="term_years" string="Term in Years"/>
+              <field name="start_date"/>
+              <field name="currency_id"/>
+            </group>
+            <group>
+              <field name="partner_id" string="Customer"/>
+              <field name="company_id" readonly="1"/>
+              <field name="annual_rate"/>
+              <field name="use_manual_payment"/>
+              <field name="manual_monthly_payment" invisible="not use_manual_payment"/>
+            </group>
+          </group>
+
+          <group string="Accounting Configuration">
+            <group>
+              <field name="vendor_bill_journal_id"/>
+              <field name="interest_expense_account_id"/>
+              <field name="posting_scope"/>
+            </group>
+            <group>
+              <field name="lease_payable_account_id"/>
+              <field name="accounts_payable_account_id"/>
+              <field name="posting_until_date" invisible="posting_scope != 'up_to_date'"/>
+            </group>
+          </group>
+
+          <group string="Calculated Details">
+            <group>
+              <field name="number_of_months" readonly="1"/>
+              <field name="monthly_payment" readonly="1"/>
+            </group>
+            <group>
+              <field name="monthly_rate" readonly="1"/>
+              <field name="end_date" readonly="1"/>
+            </group>
+          </group>
+
+          <notebook>
+            <page string="Amortization Schedule">
+              <field name="line_ids" readonly="1">
+                <list create="false" edit="false" delete="false">
+                  <field name="sequence" string="#"/>
+                  <field name="installment_date" string="Months"/>
+                  <field name="payment_amount" string="Payment"/>
+                  <field name="interest_rate" string="Interest Rate"/>
+                  <field name="interest_amount" string="Interest Amount"/>
+                  <field name="net_deduction" string="Principal Amount"/>
+                  <field name="remaining_balance" string="Remaining Balance"/>
+                  <field name="move_id" string="Vendor Bill" optional="show"/>
+                </list>
+              </field>
+            </page>
+            <page string="Notes">
+              <field name="note" placeholder="Additional notes..."/>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="leasing_amortization_action" model="ir.actions.act_window">
+    <field name="name">Leasing Amortization</field>
+    <field name="res_model">leasing.amortization</field>
+    <field name="view_mode">list,form</field>
+  </record>
+</odoo>

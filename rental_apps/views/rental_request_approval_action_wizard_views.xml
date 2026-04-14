@@ -1,0 +1,23 @@
+<odoo>
+  <record id="rental_request_approval_action_wizard_form_view" model="ir.ui.view">
+    <field name="name">rental.request.approval.action.wizard.form</field>
+    <field name="model">rental.request.approval.action.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Approval Action">
+        <sheet>
+          <group>
+            <field name="action_type" readonly="1"/>
+            <field name="request_id" readonly="1"/>
+            <field name="approval_id" readonly="1"/>
+            <field name="remarks" placeholder="Add approval/rejection notes..."/>
+            <field name="attachment_ids" widget="many2many_binary" options="{'accepted_file_extensions': '.pdf'}"/>
+          </group>
+        </sheet>
+        <footer>
+          <button name="action_confirm" type="object" string="Confirm" class="btn-primary"/>
+          <button string="Cancel" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

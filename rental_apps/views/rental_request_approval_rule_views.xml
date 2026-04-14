@@ -1,0 +1,68 @@
+<odoo>
+  <record id="rental_request_approval_rule_list_view" model="ir.ui.view">
+    <field name="name">rental.request.approval.rule.list</field>
+    <field name="model">rental.request.approval.rule</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="sequence" widget="handle"/>
+        <field name="name"/>
+        <field name="is_default" optional="hide"/>
+        <field name="brand_ids" widget="many2many_tags"/>
+        <field name="min_quantity"/>
+        <field name="max_quantity"/>
+        <field name="required_level"/>
+        <field name="active"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="rental_request_approval_rule_form_view" model="ir.ui.view">
+    <field name="name">rental.request.approval.rule.form</field>
+    <field name="model">rental.request.approval.rule</field>
+    <field name="arch" type="xml">
+      <form string="Rental Approval Rule">
+        <sheet>
+          <group>
+            <group>
+              <field name="sequence"/>
+              <field name="is_default"/>
+              <field name="brand_ids" widget="many2many_tags" invisible="is_default"/>
+              <field name="required_level"/>
+            </group>
+            <group>
+              <field name="min_quantity"/>
+              <field name="max_quantity"/>
+              <field name="active"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="rental_request_approval_rule_search_view" model="ir.ui.view">
+    <field name="name">rental.request.approval.rule.search</field>
+    <field name="model">rental.request.approval.rule</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="brand_ids"/>
+        <field name="required_level"/>
+        <field name="active"/>
+
+        <separator/>
+        <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+
+        <separator/>
+        <filter name="default_rule" string="Default Rules" domain="[('is_default', '=', True)]"/>
+        <filter name="group_level" string="Level" context="{'group_by': 'required_level'}"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="rental_request_approval_rule_record" model="ir.actions.act_window">
+    <field name="name">Approval Rules</field>
+    <field name="res_model">rental.request.approval.rule</field>
+    <field name="view_mode">list,form</field>
+    <field name="search_view_id" ref="rental_request_approval_rule_search_view"/>
+  </record>
+</odoo>

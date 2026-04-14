@@ -1,0 +1,32 @@
+<odoo>
+  <data noupdate="1">
+    <record id="rule_default_l1" model="rental.request.approval.rule">
+      <field name="is_default">True</field>
+      <field name="required_level">l1</field>
+      <field name="min_quantity">1</field>
+    </record>
+
+    <!-- Qty 1-2 with level 1 for regular brands -->
+    <record id="rule_qty_1_2_l1_regular" model="rental.request.approval.rule">
+      <field name="min_quantity">1</field>
+      <field name="max_quantity">2</field>
+      <field name="required_level">l1</field>
+      <field name="brand_ids" eval="[(6, 0, [ref('fleet_brand_honda'), ref('fleet_brand_toyota'), ref('fleet_brand_mitsubishi'), ref('fleet_brand_mazda')])]"/>
+    </record>
+
+    <!-- Qty 1-2 with level 2 for premium brands -->
+    <record id="rule_qty_1_2_l2_premium" model="rental.request.approval.rule">
+      <field name="min_quantity">1</field>
+      <field name="max_quantity">2</field>
+      <field name="required_level">l2</field>
+      <field name="brand_ids" eval="[(6, 0, [ref('fleet_brand_bmw'), ref('fleet_brand_mercedes')])]"/>
+    </record>
+
+    <!-- Qty >= 3 with level 3 for all listed brands -->
+    <record id="rule_qty_gte_3_l3_all" model="rental.request.approval.rule">
+      <field name="min_quantity">3</field>
+      <field name="required_level">l3</field>
+      <field name="brand_ids" eval="[(6, 0, [ref('fleet_brand_honda'), ref('fleet_brand_toyota'), ref('fleet_brand_mitsubishi'), ref('fleet_brand_mazda'), ref('fleet_brand_bmw'), ref('fleet_brand_mercedes')])]"/>
+    </record>
+  </data>
+</odoo>

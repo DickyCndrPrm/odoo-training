@@ -1,0 +1,11 @@
+<odoo>
+  <menuitem id="root_level" name="Estate Management System"/>
+
+  <menuitem id="estate_property" name="Estate" parent="root_level"/>
+  <menuitem id="estate_property_setting" name="Settings" parent="root_level"/>
+
+  <menuitem id="estate_property_view" name="Estate Property" parent="estate_property" action="estate_property_record"/>
+
+  <menuitem id="estate_property_type_menu" name="Property Type" parent="estate_property_setting" action="estate_property_type_record"/>
+  <menuitem id="estate_property_tag_menu" name="Property Tag" parent="estate_property_setting" action="estate_property_tag_record"/>
+</odoo>

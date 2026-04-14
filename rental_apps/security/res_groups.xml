@@ -1,0 +1,15 @@
+<odoo>
+  <record id="group_rental_approver_l1" model="res.groups">
+    <field name="name">Rental Approver L1</field>
+  </record>
+
+  <record id="group_rental_approver_l2" model="res.groups">
+    <field name="name">Rental Approver L2</field>
+    <field name="implied_ids" eval="[(4, ref('group_rental_approver_l1'))]"/>
+  </record>
+
+  <record id="group_rental_approver_l3" model="res.groups">
+    <field name="name">Rental Approver L3</field>
+    <field name="implied_ids" eval="[(4, ref('group_rental_approver_l2'))]"/>
+  </record>
+</odoo>

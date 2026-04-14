@@ -1,0 +1,5 @@
+<odoo>
+  <menuitem id="menu_leasing_root" name="Leasing" sequence="30"/>
+
+  <menuitem id="menu_leasing_amortization" name="Amortization Calculator" parent="menu_leasing_root" action="leasing_amortization_action" sequence="10" />
+</odoo>

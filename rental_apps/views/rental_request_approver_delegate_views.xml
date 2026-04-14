@@ -1,0 +1,67 @@
+<odoo>
+  <record id="rental_request_approver_delegate_list_view" model="ir.ui.view">
+    <field name="name">rental.request.approver.delegate.list</field>
+    <field name="model">rental.request.approver.delegate</field>
+    <field name="arch" type="xml">
+      <list default_order="delegate_start desc,id desc">
+        <field name="approver_user_id"/>
+        <field name="delegate_user_id"/>
+        <field name="delegate_start"/>
+        <field name="delegate_end"/>
+        <field name="is_active_now"/>
+        <field name="active"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="rental_request_approver_delegate_form_view" model="ir.ui.view">
+    <field name="name">rental.request.approver.delegate.form</field>
+    <field name="model">rental.request.approver.delegate</field>
+    <field name="arch" type="xml">
+      <form string="Approver Delegate">
+        <sheet>
+          <group>
+            <group>
+              <field name="approver_user_id"/>
+              <field name="delegate_user_id"/>
+              <field name="active"/>
+            </group>
+            <group>
+              <field name="delegate_start"/>
+              <field name="delegate_end"/>
+              <field name="is_active_now" readonly="1"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="rental_request_approver_delegate_search_view" model="ir.ui.view">
+    <field name="name">rental.request.approver.delegate.search</field>
+    <field name="model">rental.request.approver.delegate</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="approver_user_id"/>
+        <field name="delegate_user_id"/>
+        <field name="active"/>
+
+        <separator/>
+        <filter name="active_now" string="Active Now" domain="[('is_active_now', '=', True)]"/>
+        <filter name="active_only" string="Active Rules" domain="[('active', '=', True)]"/>
+
+        <separator/>
+        <filter name="group_by_approver" string="Approver" context="{'group_by': 'approver_user_id'}"/>
+        <filter name="group_by_delegate" string="Delegate" context="{'group_by': 'delegate_user_id'}"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="rental_request_approver_delegate_action" model="ir.actions.act_window">
+    <field name="name">Approver Delegate</field>
+    <field name="res_model">rental.request.approver.delegate</field>
+    <field name="view_mode">list,form</field>
+    <field name="search_view_id" ref="rental_request_approver_delegate_search_view"/>
+    <field name="context">{'search_default_active_now': 1, 'search_default_active_only': 1}</field>
+  </record>
+</odoo>

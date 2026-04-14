@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+    <record id="default_rental_approver_mapping_l1" model="rental.request.approver.mapping">
+      <field name="role">l1</field>
+      <field name="user_id" ref="user_rental_approver_l1_joko"/>
+      <field name="active">True</field>
+    </record>
+
+    <record id="default_rental_approver_mapping_l2" model="rental.request.approver.mapping">
+      <field name="role">l2</field>
+      <field name="user_id" ref="user_rental_approver_l2_wira"/>
+      <field name="active">True</field>
+    </record>
+
+    <record id="default_rental_approver_mapping_l3" model="rental.request.approver.mapping">
+      <field name="role">l3</field>
+      <field name="user_id" ref="user_rental_approver_l3_reno"/>
+      <field name="active">True</field>
+    </record>
+  </data>
+</odoo>

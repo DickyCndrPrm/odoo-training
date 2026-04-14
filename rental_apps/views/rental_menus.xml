@@ -1,0 +1,18 @@
+<odoo>
+  <menuitem id="root_level" name="Rental Apps"/>
+
+  <menuitem id="rental_request" name="Rental" parent="root_level"/>
+  <menuitem id="rental_reporting" name="Reporting" parent="root_level"/>
+  <menuitem id="rental_configuration" name="Configuration" parent="root_level"/>
+
+  <menuitem id="rental_request_view" name="Rental Request" parent="rental_request" action="rental_request_record"/>
+  <menuitem id="rental_request_my_approval_view" name="My Approvals" parent="rental_request" action="rental_request_my_approval_record"/>
+  <menuitem id="rental_request_line_view" name="Request Lines" parent="rental_request" action="rental_request_line_record"/>
+  <menuitem id="rental_request_approval_view" name="Approver Logs" parent="rental_request" action="rental_request_approval_record"/>
+  <menuitem id="rental_request_approval_rule_view" name="Approval Rules" parent="rental_configuration" action="rental_request_approval_rule_record"/>
+  <menuitem id="rental_request_approver_mapping_view" name="Approver Mapping" parent="rental_configuration" action="rental_request_approver_mapping_action"/>
+  <menuitem id="rental_request_approver_delegate_view" name="Approver Delegation" parent="rental_configuration" action="rental_request_approver_delegate_action"/>
+
+  <menuitem id="rental_request_report_view" name="Request Analysis" parent="rental_reporting" action="rental_request_record"/>
+  <menuitem id="rental_approval_report_view" name="Approval Analysis" parent="rental_reporting" action="rental_request_approval_record"/>
+</odoo>

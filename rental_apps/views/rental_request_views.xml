@@ -1,0 +1,135 @@
+<odoo>
+  <record id="rental_request_search_view" model="ir.ui.view">
+    <field name="name">rental.request.search</field>
+    <field name="model">rental.request</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name"/>
+        <field name="customer_id"/>
+        <field name="request_type"/>
+        <field name="state"/>
+        <field name="next_approver_id"/>
+
+        <separator/>
+        <filter name="state_new" string="Draft" domain="[('state', '=', 'new')]"/>
+        <filter name="state_waiting" string="Waiting" domain="[('state', '=', 'waiting')]"/>
+        <filter name="my_approval" string="Need My Approval" domain="[('state', '=', 'waiting'), ('next_approver_id', '=', uid)]"/>
+        <filter name="state_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+        <filter name="state_rejected" string="Rejected" domain="[('state', '=', 'rejected')]"/>
+
+        <separator/>
+        <filter name="group_by_customer" string="Customer" context="{'group_by': 'customer_id'}"/>
+        <filter name="group_by_type" string="Request Type" context="{'group_by': 'request_type'}"/>
+        <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+        <filter name="group_by_next_approver" string="Current Approver" context="{'group_by': 'next_approver_id'}"/>
+      </search>
+    </field>
+  </record>
+
+  <record id="rental_request_list_view" model="ir.ui.view">
+    <field name="name">rental.request.list</field>
+    <field name="model">rental.request</field>
+    <field name="arch" type="xml">
+      <list decoration-info="state == 'new'" decoration-warning="state == 'waiting'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'">
+        <field name="name"/>
+        <field name="date"/>
+        <field name="customer_id"/>
+        <field name="request_type"/>
+        <field name="required_date"/>
+        <field name="approver_stage"/>
+        <field name="next_approver_id"/>
+        <field name="state"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="rental_request_form_view" model="ir.ui.view">
+    <field name="name">rental.request.form</field>
+    <field name="model">rental.request</field>
+    <field name="arch" type="xml">
+      <form string="Rental Request">
+        <header>
+          <button name="action_open_accept_wizard" type="object" string="Accept" invisible="not can_current_user_approve"/>
+          <button name="action_open_reject_wizard" type="object" string="Reject" invisible="not can_current_user_approve"/>
+          <button name="action_open_delegate_wizard" type="object" string="Delegate" invisible="not can_current_user_delegate"/>
+          <button name="action_admin_reject_request" type="object" string="Reject (Admin)" groups="base.group_system" class="btn-danger" invisible="state == 'rejected'"/>
+          <button name="action_send_notification_to_current_approver" type="object" string="Send Notification" groups="base.group_system" invisible="state != 'waiting'"/>
+          <button name="action_submit_for_approval" type="object" string="Submit for Approval" invisible="state != 'new'"/>
+          <field name="can_current_user_approve" invisible="1"/>
+          <field name="can_current_user_delegate" invisible="1"/>
+          <field name="state" widget="statusbar" statusbar_visible="new,waiting,approved,rejected"/>
+        </header>
+        <sheet>
+          <group>
+            <group>
+              <field name="name" readonly="1"/>
+              <field name="date"/>
+              <field name="required_date"/>
+            </group>
+            <group>
+              <field name="customer_id"/>
+              <field name="request_type"/>
+              <field name="approver_stage" readonly="1"/>
+              <field name="next_approver_id" readonly="1"/>
+            </group>
+          </group>
+
+          <notebook>
+            <page string="Request Lines">
+              <field name="line_ids">
+                <list editable="bottom">
+                  <field name="brand_id"/>
+                  <field name="model_id" domain="[('brand_id', '=', brand_id)]"/>
+                  <field name="quantity"/>
+                </list>
+              </field>
+            </page>
+            <page string="Approver Stages">
+              <field name="approver_ids" readonly="1">
+                <list decoration-warning="state == 'pending'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'" decoration-muted="state == 'cancelled'">
+                  <field name="approval_cycle"/>
+                  <field name="user_id"/>
+                  <field name="role"/>
+                  <field name="state"/>
+                  <field name="action_date" readonly="1"/>
+                  <field name="remarks" optional="hide"/>
+                </list>
+              </field>
+            </page>
+            <page string="Notes">
+              <field name="note" placeholder="Add internal notes or remarks here..."/>
+              <field name="note_attachment_ids" widget="many2many_binary" options="{'accepted_file_extensions': '.pdf'}"/>
+            </page>
+          </notebook>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <record id="rental_request_pivot_view" model="ir.ui.view">
+    <field name="name">rental.request.pivot</field>
+    <field name="model">rental.request</field>
+    <field name="arch" type="xml">
+      <pivot string="Rental Request Analysis">
+        <field name="customer_id" type="row"/>
+        <field name="state" type="col"/>
+      </pivot>
+    </field>
+  </record>
+
+  <record id="rental_request_record" model="ir.actions.act_window">
+    <field name="name">Rental Request</field>
+    <field name="res_model">rental.request</field>
+    <field name="view_mode">list,form,pivot</field>
+    <field name="search_view_id" ref="rental_request_search_view"/>
+  </record>
+
+  <record id="rental_request_my_approval_record" model="ir.actions.act_window">
+    <field name="name">My Approval Requests</field>
+    <field name="res_model">rental.request</field>
+    <field name="view_mode">list,form</field>
+    <field name="domain">[('state', '=', 'waiting'), ('next_approver_id', '=', uid)]</field>
+    <field name="search_view_id" ref="rental_request_search_view"/>
+  </record>
+</odoo>

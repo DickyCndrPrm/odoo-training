@@ -1,0 +1,23 @@
+<odoo>
+  <record id="rental_request_form_view_inherit_leasing_amortization" model="ir.ui.view">
+    <field name="name">rental.request.form.inherit.leasing.amortization</field>
+    <field name="model">rental.request</field>
+    <field name="inherit_id" ref="rental_apps.rental_request_form_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//notebook/page[field[@name='note_attachment_ids']]" position="after">
+        <page string="Leasing Amortizations">
+          <field name="leasing_amortization_ids" readonly="1">
+            <list decoration-muted="state == 'cancelled'" decoration-warning="state == 'draft'" decoration-success="state == 'done'">
+              <field name="name"/>
+              <field name="state"/>
+              <field name="principal"/>
+              <field name="term_years"/>
+              <field name="monthly_payment" readonly="1"/>
+              <field name="start_date"/>
+            </list>
+          </field>
+        </page>
+      </xpath>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,22 @@
+<odoo>
+  <record id="rental_request_delegate_wizard_form_view" model="ir.ui.view">
+    <field name="name">rental.request.delegate.wizard.form</field>
+    <field name="model">rental.request.delegate.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Delegate Approval">
+        <sheet>
+          <group>
+            <field name="request_id" readonly="1"/>
+            <field name="approval_id" readonly="1"/>
+            <field name="current_user_id" readonly="1"/>
+            <field name="delegate_user_id"/>
+          </group>
+        </sheet>
+        <footer>
+          <button name="action_confirm" type="object" string="Delegate" class="btn-primary"/>
+          <button string="Cancel" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

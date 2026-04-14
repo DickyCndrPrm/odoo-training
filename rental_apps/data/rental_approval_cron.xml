@@ -1,0 +1,13 @@
+<odoo>
+  <data noupdate="1">
+    <record id="ir_cron_rental_approval_reminder" model="ir.cron">
+      <field name="name">Rental Approval Reminder</field>
+      <field name="model_id" ref="model_rental_request"/>
+      <field name="state">code</field>
+      <field name="code">model._cron_send_pending_approval_reminders()</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="active">True</field>
+    </record>
+  </data>
+</odoo>
