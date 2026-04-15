@@ -352,9 +352,20 @@ class RentalRequest(models.Model):
     @api.model
     def _cron_send_pending_approval_reminders(self):
         self.env['rental.request.approver.delegate'].sync_pending_approvals()
-        waiting_requests = self.search([
-            ('state', '=', 'waiting'),
-            ('approver_ids.state', '=', 'pending'),
-        ])
-        for request in waiting_requests:
-            request._send_next_approver_notification(is_reminder=True)
+        
+        batch_size = 100
+        offset = 0
+        
+        while True:
+            waiting_requests = self.search([
+                ('state', '=', 'waiting'),
+                ('approver_ids.state', '=', 'pending'),
+            ], limit=batch_size, offset=offset)
+            
+            if not waiting_requests:
+                break
+            
+            for request in waiting_requests:
+                request._send_next_approver_notification(is_reminder=True)
+            
+            offset += batch_size
